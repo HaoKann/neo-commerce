@@ -1,5 +1,6 @@
-// Создание состояния для товаров
 import { useState, useEffect } from 'react';
+import React from 'react';
+import ProductCard from '../components/ProductCard';
 
 function Home() {
   const [products, setProducts] = useState([]);
@@ -33,3 +34,5 @@ function Home() {
     </div>
   );
 }
+
+export default Home;

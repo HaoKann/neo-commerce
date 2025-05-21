@@ -1,0 +1,97 @@
+.registerContainer {
+  max-width: 480px;
+  margin: 40px auto;
+  padding: 32px;
+  background: #FFFFFF;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.registerTitle {
+  color: #2D3748;
+  text-align: center;
+  font-size: 28px;
+  margin-bottom: 32px;
+  font-weight: 600;
+}
+
+.registerForm {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.inputLabel {
+  font-size: 16px;
+  color: #4A5568;
+  font-weight: 500;
+}
+
+.inputField {
+  padding: 14px 16px;
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: border-color 0.2s;
+}
+
+.inputField:focus {
+  outline: none;
+  border-color: #667EEA;
+}
+
+.inputError {
+  border-color: #E53E3E;
+}
+
+.errorText {
+  color: #E53E3E;
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+.submitButton {
+  background-color: #667EEA;
+  color: white;
+  padding: 16px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-top: 16px;
+}
+
+.submitButton:hover {
+  background-color: #5A67D8;
+}
+
+.errorAlert {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background-color: #FFF5F5;
+  border-radius: 8px;
+  margin-bottom: 24px;
+  color: #E53E3E;
+}
+
+.alertIcon {
+  width: 24px;
+  height: 24px;
+}
+
+@media (max-width: 600px) {
+  .registerContainer {
+    margin: 20px;
+    padding: 24px;
+  }
+}
