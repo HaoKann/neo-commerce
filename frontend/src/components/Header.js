@@ -1,6 +1,7 @@
 //  # React-компоненты - заголовок
 
 import { Link } from 'react-router-dom';
+
 import styles from './Header.module.css';
 
 export default function Header() {
@@ -14,3 +15,5 @@ export default function Header() {
     </header>
   );
 }
+
+<Link to="/login">Войти</Link>

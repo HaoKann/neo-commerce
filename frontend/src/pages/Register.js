@@ -17,6 +17,12 @@ export default function Register() {
     setIsLoading(true);
     setError('');
 
+    if (formData.password !== formData.confirmPassword) {
+      setError('Пароли не совпадают');
+      setIsLoading(false);
+      return;
+    }
+
     try {
       const response = await fetch('http://localhost:4000/api/users/register', {
         method: 'POST',
@@ -29,7 +35,7 @@ export default function Register() {
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.error || 'Registration failed');
+        throw new Error(errorData.error || 'Ошибка регистрации');
       }
 
       navigate('/login');
@@ -42,30 +48,52 @@ export default function Register() {
 
   return (
     <div className={styles.registerContainer}>
-      <h2>Регистрация</h2>
+      <h2 className={styles.registerTitle}>Регистрация</h2>
 
       {error && (
-        <div className={styles.error}>
-          <img
-            src={require('../../media/alerts/_error.png')}
-            alt="Ошибка"
-            className={styles.errorIcon}
-          />
-          {error}
+        <div className={styles.errorAlert}>
+          <span className={styles.errorText}>{error}</span>
         </div>
       )}
 
-      <form onSubmit={handleSubmit}>
-        {/* Здесь должны быть поля ввода */}
-        <button
-          type="submit"
-          disabled={isLoading}
-          className={styles.submitButton}
-        >
+      <form onSubmit={handleSubmit} className={styles.registerForm}>
+        <div className={styles.inputGroup}>
+          <label className={styles.inputLabel}>Email:</label>
+          <input
+            type="email"
+            value={formData.email}
+            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+            className={styles.inputField}
+            required
+          />
+        </div>
+
+        <div className={styles.inputGroup}>
+          <label className={styles.inputLabel}>Пароль:</label>
+          <input
+            type="password"
+            value={formData.password}
+            onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+            className={styles.inputField}
+            required
+          />
+        </div>
+
+        <div className={styles.inputGroup}>
+          <label className={styles.inputLabel}>Подтвердите пароль:</label>
+          <input
+            type="password"
+            value={formData.confirmPassword}
+            onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
+            className={styles.inputField}
+            required
+          />
+        </div>
+
+        <button type="submit" disabled={isLoading} className={styles.submitButton}>
           {isLoading ? 'Загрузка...' : 'Зарегистрироваться'}
         </button>
       </form>
     </div>
   );
 }
-
