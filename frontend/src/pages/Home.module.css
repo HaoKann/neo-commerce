@@ -89,3 +89,30 @@
   height: 100px;
   margin-bottom: 16px;
 }
+
+.searchContainer {
+  position: relative;
+  margin-bottom: 32px;
+}
+
+.clearSearch {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #718096;
+}
+
+.retryButton {
+  margin-left: 12px;
+  padding: 6px 12px;
+  background: #667EEA;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}

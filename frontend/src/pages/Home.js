@@ -1,108 +1,147 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import styles from './Home.module.css';
 
+const productsData = [
+  {
+    "id": 1,
+    "title": "SoundCore Q30",
+    "price": "15000",
+    "image": "/images/products/electronics/soundcore-q30.jpg"
+  },
+  {
+    "id": 2,
+    "title": "Anker PowerCore",
+    "price": "3500",
+    "image": "/images/products/electronics/anker-power-core.jpg"
+  },
+  {
+    "id": 3,
+    "title": "Case iPhone 15",
+    "price": "1200",
+    "image": "/images/products/electronics/iphone-15-case.jpg"
+  },
+  {
+    "id": 4,
+    "title": "Galaxy Watch 6",
+    "price": "25000",
+    "image": "/images/products/electronics/galaxywatch6.jpg"
+  },
+  {
+    "id": 5,
+    "title": "JBL Flip 6",
+    "price": "5500",
+    "image": "/images/products/electronics/flip-6.jpg"
+  },
+  {
+    "id": 6,
+    "title": "Logitech G502",
+    "price": "4200",
+    "image": "/images/products/electronics/g502.jpg"
+  },
+  {
+    "id": 7,
+    "title": "Anker 735",
+    "price": "2800",
+    "image": "/images/products/electronics/anker735.jpg"
+  },
+  {
+    "id": 8,
+    "title": "SanDisk 128GB",
+    "price": "2100",
+    "image": "/images/products/electronics/sandisk.jpg"
+  },
+  {
+    "id": 9,
+    "title": "Spigen Case",
+    "price": "1100",
+    "image": "/images/products/electronics/spigen.jpg"
+  },
+  {
+    "id": 10,
+    "title": "HUAWEI FreeBuds 5i",
+    "price": "7000",
+    "image": "/images/products/electronics/huawei.jpg"
+  },
+  {
+    "id": 11,
+    "title": "Xiaomi 5000mAh",
+    "price": "2500",
+    "image": "/images/products/electronics/xiaomi.jpg"
+  },
+  {
+    "id": 12,
+    "title": "Kingston 64GB",
+    "price": "1800",
+    "image": "/images/products/electronics/kingston.jpg"
+  }
+];
+
+const ProductCard = React.memo(({ product }) => {
+  const [imageError, setImageError] = useState(false);
+  
+  return (
+    <div className={styles.card}>
+      <img
+        src={imageError ? 'https://via.placeholder.com/200' : product.image}
+        alt={product.title}
+        className={styles.image}
+        onError={() => setImageError(true)}
+      />
+      <h3 className={styles.name}>{product.title}</h3>
+      <p className={styles.price}>
+        {new Intl.NumberFormat('ru-RU').format(Number(product.price))} ₸
+      </p>
+      <div className={styles.buttons}>
+        <button className={styles.cartButton} aria-label="Добавить в корзину">➕</button>
+        <button className={styles.likeButton} aria-label="Добавить в избранное">❤️</button>
+      </div>
+    </div>
+  );
+});
+
 export default function Home() {
-  const [products, setProducts] = useState([]);
   const [query, setQuery] = useState('');
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await fetch('http://localhost:4000/api/products/get-products');
-        
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        
-        const data = await response.json();
-        
-        // Проверка, что данные - массив и содержат необходимые поля
-        if (!Array.isArray(data)) {
-          throw new Error('Ожидался массив товаров');
-        }
-        
-        // Добавляем проверку наличия обязательных полей
-        const validatedProducts = data.map(item => ({
-          id: item.id || Math.random().toString(36).substr(2, 9),
-          name: item.name || 'Без названия',
-          price: item.price || 0,
-          image: item.image || 'https://via.placeholder.com/200'
-        }));
-        
-        setProducts(validatedProducts);
-      } catch (err) {
-        console.error('Ошибка загрузки:', err);
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProducts();
-  }, []);
-
-  const filteredProducts = products.filter(product => {
-    // Безопасная проверка свойства name
-    const productName = product.name ? product.name.toLowerCase() : '';
-    const searchQuery = query.toLowerCase();
-    return productName.includes(searchQuery);
-  });
+  const filteredProducts = useMemo(() => {
+    const lowerQuery = query.toLowerCase();
+    return productsData.filter(product =>
+      product.title.toLowerCase().includes(lowerQuery)
+    );
+  }, [query]);
 
   return (
     <div className={styles.home}>
       <h1 className={styles.title}>Все товары</h1>
-
-      <input
-        type="text"
-        placeholder="Поиск товара..."
-        className={styles.searchInput}
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-      />
-
-      {error ? (
-        <div className={styles.error}>
-          ⚠️ Произошла ошибка: {error}
-        </div>
-      ) : loading ? (
-        <p className={styles.message}>Загрузка товаров...</p>
-      ) : filteredProducts.length === 0 ? (
-        <div className={styles.empty}>
-          <img 
-            src="/media/alerts/empty-cart.png" 
-            alt="Товары не найдены"
-            onError={(e) => {
-              e.target.src = 'https://via.placeholder.com/100';
-            }}
-          />
+      <div className={styles.searchContainer}>
+        <input
+          type="text"
+          placeholder="Поиск товара..."
+          className={styles.searchInput}
+          value={query}
+          onChange={e => setQuery(e.target.value)}
+          aria-label="Поле поиска товаров"
+        />
+        {query && (
+          <button
+            className={styles.clearSearch}
+            onClick={() => setQuery('')}
+            aria-label="Очистить поиск"
+          >
+            ×
+          </button>
+        )}
+      </div>
+      <div className={styles.grid}>
+        {filteredProducts.length > 0 ? (
+          filteredProducts.map(product => (
+            <ProductCard key={product.id} product={product} />
+          ))
+        ) : (
           <p className={styles.message}>
             {query ? 'Товары не найдены' : 'Нет доступных товаров'}
           </p>
-        </div>
-      ) : (
-        <div className={styles.grid}>
-          {filteredProducts.map(product => (
-            <div key={product.id} className={styles.card}>
-              <img
-                src={product.image}
-                alt={product.name}
-                className={styles.image}
-                onError={(e) => {
-                  e.target.src = 'https://via.placeholder.com/200';
-                }}
-              />
-              <h3 className={styles.name}>{product.name}</h3>
-              <p className={styles.price}>{product.price} ₸</p>
-              <div className={styles.buttons}>
-                <button className={styles.cartButton}>➕</button>
-                <button className={styles.likeButton}>❤️</button>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }
