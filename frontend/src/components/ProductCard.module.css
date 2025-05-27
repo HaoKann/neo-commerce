@@ -1,0 +1,56 @@
+.productCard {
+  border: 1px solid #eee;
+  padding: 15px;
+  margin: 10px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.productCard:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.addButton {
+  background: #6200ee;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.image {
+  width: 200px;        /* фиксированная ширина */
+  height: 200px;       /* фиксированная высота */
+  object-fit: contain; /* сохраняет пропорции, не обрезая */
+  background-color: #f9f9f9; /* нейтральный фон для пустых областей */
+  border-radius: 8px;  /* скругление углов (по желанию) */
+  display: block;
+  margin: 0 auto;
+}
+
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.likeButton {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.likeButton:hover {
+  transform: scale(1.1);
+}
+
+.likeButton.active {
+  color: #ff4444;
+}

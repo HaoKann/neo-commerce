@@ -1,19 +1,13 @@
 //  # React-компоненты - заголовок
 
-import { Link } from 'react-router-dom';
-
-import styles from './Header.module.css';
-
-export default function Header() {
-  return (
-    <header className={styles.header}>
-      <nav>
-        <Link to="/register" className={styles.registerLink}>
-          Регистрация
-        </Link>
-      </nav>
-    </header>
-  );
-}
-
-<Link to="/login">Войти</Link>
+<nav className={styles.nav}>
+  <Link to="/" className={styles.logo}>Магазин</Link>
+  <div className={styles.links}>
+    <Link to="/favorites" className={styles.link}>
+      Избранное
+    </Link>
+    <Link to="/cart" className={styles.link}>
+      Корзина {totalQuantity > 0 && <span className={styles.badge}>{totalQuantity}</span>}
+    </Link>
+  </div>
+</nav>
