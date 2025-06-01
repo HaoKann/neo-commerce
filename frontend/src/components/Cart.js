@@ -2,20 +2,19 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { removeFromCart, clearCart } from '../store/cartSlice';
 import { addOrder } from '../store/ordersSlice';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import styles from './Cart.module.css';
+import emptyCartIcon from '../assets/media/alerts/empty-cart.svg';
+import successOrderIcon from '../assets/media/alerts/success-order.svg';
 
 function Cart() {
-  const cartItems = useSelector((state) => state.cart);
+  const cartItems = useSelector((state) => state.cart.items);
+  const totalPrice = useSelector((state) => state.cart.totalPrice);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [orderPlaced, setOrderPlaced] = useState(false);
-
-  const totalPrice = cartItems.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0
-  );
 
   const handleOrder = () => {
     if (!orderPlaced && cartItems.length > 0) {
@@ -37,12 +36,31 @@ function Cart() {
     <div className={styles.cartContainer}>
       <h2 className={styles.cartTitle}>Корзина</h2>
 
-      {orderPlaced && (
-        <p className={styles.successMessage}>Заказ оформлен</p>
-      )}
-
-      {cartItems.length === 0 ? (
-        <p className={styles.emptyCart}>Ваша корзина пуста</p>
+      {orderPlaced ? (
+        <div className={styles.successBlock}>
+          <img
+            src={successOrderIcon}
+            alt="Заказ оформлен"
+            className={styles.successIcon}
+          />
+          <p className={styles.successMessage}>Заказ оформлен</p>
+          <p className={styles.successSubtext}>
+            Ваш заказ скоро будет передан курьерской службе
+          </p>
+        </div>
+      ) : cartItems.length === 0 ? (
+        <div className={styles.emptyBlock}>
+          <img
+            src={emptyCartIcon}
+            alt="Корзина пуста"
+            className={styles.emptyIcon}
+          />
+          <p className={styles.emptyCart}>Ваша корзина пуста</p>
+          {/* Кнопка возвращения на главную */}
+          <Link to="/" className={styles.backToHomeButton}>
+            ← Вернуться на главную страницу
+          </Link>
+        </div>
       ) : (
         <ul className={styles.cartList}>
           {cartItems.map((item) => (
@@ -70,16 +88,15 @@ function Cart() {
       )}
 
       {(cartItems.length > 0 || orderPlaced) && (
-  <div className={styles.cartTotal}>
-    <p className={styles.totalText}>
-      <strong>Общая сумма:</strong> {totalPrice} ₸
-    </p>
-    <button onClick={handleOrder} className={styles.orderButton}>
-      {orderPlaced ? 'Вернуться на главную страницу' : 'Оформить заказ'}
-    </button>
-  </div>
-)}
-
+        <div className={styles.cartTotal}>
+          <p className={styles.totalText}>
+            <strong>Общая сумма:</strong> {totalPrice} ₸
+          </p>
+          <button onClick={handleOrder} className={styles.orderButton}>
+            {orderPlaced ? '← Вернуться на главную страницу' : 'Оформить заказ'}
+          </button>
+        </div>
+      )}
     </div>
   );
 }

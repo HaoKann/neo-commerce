@@ -80,26 +80,161 @@
 }
 
 .cartTotal {
-  margin-top: 30px;
+  margin-top: 24px;
+  padding-top: 12px;
+  border-top: 1px solid #e2e8f0;
   text-align: right;
 }
 
 .totalText {
-  font-size: 18px;
-  margin-bottom: 10px;
+  font-size: 20px;
+  font-weight: 600;
+  color: #2d3748;
+  margin-top: 20px;
 }
 
+
 .orderButton {
-  background-color: #1890ff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--primary, #8758D4);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.2s ease;
+  text-decoration: none;
+}
+
+.orderButton:hover {
+  background-color: #6b43b8;
+}
+
+.arrowLeft {
+  margin-right: 8px;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+/* Дополнительные классы, если используешь CSS-переменные */
+.cart {
+  background: var(--light, #f9f9f9);
+}
+
+.summary {
+  border-top: 2px solid var(--primary, #1890ff);
+}
+
+.checkoutButton {
+  background-color: var(--primary, #1890ff);
   color: white;
   border: none;
   padding: 10px 20px;
-  font-size: 16px;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
 
-.orderButton:hover {
-  background-color: #0c70d4;
+.checkoutButton:hover {
+  background-color: var(--primary-dark, #0c70d4);
+}
+
+.emptyCartContainer {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.emptyCartIcon {
+  width: 80px;
+  height: auto;
+  margin-bottom: 15px;
+}
+
+.emptyCart {
+  font-size: 18px;
+  color: #777;
+}
+
+
+.successBlock {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.successIcon {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 10px;
+}
+
+.emptyBlock {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.emptyIcon {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 10px;
+}
+
+.successMessage {
+  color: green;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+
+.successSubtext {
+  color: #888888;
+  font-size: 14px;
+  margin-top: 6px;
+  text-align: center;
+}
+
+.primaryButton {
+  display: inline-block;
+  background-color: var(--primary, #8758D4);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.primaryButton:hover {
+  background-color: #6b43b8;
+}
+
+.primaryButton .arrow {
+  margin-right: 8px;
+  font-weight: bold;
+}
+
+.backToHomeButton {
+  display: inline-block;
+  padding: 8px 14px;
+  background-color: var(--primary);
+  color: var(--light);
+  font-weight: 600;
+  border-radius: 6px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+  user-select: none;
+}
+
+.backToHomeButton:hover,
+.backToHomeButton:focus {
+  background-color: var(--primary-light); /* светлый оттенок, не полностью фиолетовый */
+  color: var(--light); /* цвет текста оставляем светлым */
+  outline: none;
 }

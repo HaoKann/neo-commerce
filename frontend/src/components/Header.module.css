@@ -1,0 +1,104 @@
+/* Header.module.css */
+
+.navBar {
+  background-color: var(--primary);
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* Если нужна фиксированная шапка, добавь: */
+  /* position: sticky; top: 0; z-index: 100; */
+}
+
+.navLeft, .navRight {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.navButton {
+  color: var(--light);
+  text-decoration: none;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+  transition: color 0.3s;
+}
+
+.navButton:hover {
+  color: var(--secondary-light);
+}
+
+.navIcon {
+  font-size: 1.2rem;
+  display: inline-block;
+}
+
+.badge {
+  background-color: var(--danger);
+  color: var(--light);
+  padding: 2px 6px;
+  border-radius: 50%;
+  font-size: 0.75rem;
+  margin-left: 6px;
+  min-width: 18px;
+  text-align: center;
+  line-height: 1;
+  font-weight: 700;
+  display: inline-block;
+}
+
+.cartButton {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background-color: var(--primary);
+  color: var(--light);
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.3s;
+}
+
+
+
+.cartSum {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.loginButton {
+  background-color: var(--secondary);
+  color: var(--light);
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.3s;
+}
+
+.loginButton:hover {
+  background-color: var(--secondary-light);
+}
+
+.logoutButton {
+  background-color: var(--danger);
+  color: var(--light);
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s;
+}
+
+.logoutButton:hover {
+  background-color: #d93c3c; /* чуть светлее красного */
+}

@@ -312,3 +312,8 @@
   border-radius: 4px;
   cursor: pointer;
 }
+.cartSum {
+  opacity: 1; /* или просто не указывай opacity */
+  /* можно убрать transition, если не нужен */
+}
+

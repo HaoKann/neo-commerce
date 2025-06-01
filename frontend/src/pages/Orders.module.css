@@ -72,3 +72,67 @@
 .homeButton:hover {
   background-color: #0056b3; /* чуть темнее при наведении */
 }
+
+
+.ordersContainer {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.nonOrdersIcon {
+  width: 120px;
+  height: auto;
+  margin-bottom: 16px;
+}
+
+.noOrdersText {
+  font-size: 18px;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.homeButton {
+  display: inline-block;
+  padding: 8px 14px;
+  background-color: var(--primary);
+  color: var(--light);
+  font-weight: 600;
+  border-radius: 6px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+  user-select: none;
+}
+
+.homeButton:hover {
+ background-color: var(--primary-light); /* светлый оттенок, не полностью фиолетовый */
+  color: var(--light); /* цвет текста оставляем светлым */
+  outline: none;
+}
+
+
+.noOrdersBold {
+  font-weight: bold;
+  color: #000000;
+  font-size: 20px;
+  text-align: center;
+  margin-top: 40px;
+}
+
+.noOrdersSubText {
+  font-size: 16px;
+  color: #666666;
+  text-align: center;
+  margin-top: 8px;
+  margin-bottom: 0;
+}
+
+.title {
+  text-align: left;
+  margin-bottom: 20px;
+  font-size: 28px;
+  font-weight: 600;
+  color: #000;
+}

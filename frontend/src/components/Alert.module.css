@@ -1,0 +1,17 @@
+.alert {
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin: 1rem 0;
+}
+
+.alertDanger {
+  background-color: color-mix(in srgb, var(--danger) 10%, transparent);
+  color: var(--danger);
+  border-left: 4px solid var(--danger);
+}
+
+.alertSuccess {
+  background-color: color-mix(in srgb, var(--primary) 10%, transparent);
+  color: var(--primary-dark);
+  border-left: 4px solid var(--primary);
+}
