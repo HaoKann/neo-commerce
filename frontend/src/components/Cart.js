@@ -88,15 +88,22 @@ function Cart() {
       )}
 
       {(cartItems.length > 0 || orderPlaced) && (
-        <div className={styles.cartTotal}>
-          <p className={styles.totalText}>
-            <strong>Общая сумма:</strong> {totalPrice} ₸
-          </p>
-          <button onClick={handleOrder} className={styles.orderButton}>
-            {orderPlaced ? '← Вернуться на главную страницу' : 'Оформить заказ'}
-          </button>
-        </div>
-      )}
+  <div className={styles.cartTotal}>
+    <p className={styles.totalText}>
+      <strong>Общая сумма:</strong> {totalPrice} ₸
+    </p>
+
+    {/* Сначала кнопка оформить заказ */}
+    <button onClick={handleOrder} className={styles.orderButton}>
+      {orderPlaced ? '← Вернуться на главную страницу' : 'Оформить заказ'}
+    </button>
+
+    {/* Потом кнопка "вернуться на главную" */}
+    <Link to="/" className={styles.backButton}>
+      Вернуться на главную
+    </Link>
+  </div>
+)}
     </div>
   );
 }

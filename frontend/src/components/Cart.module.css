@@ -80,19 +80,15 @@
 }
 
 .cartTotal {
-  margin-top: 24px;
-  padding-top: 12px;
-  border-top: 1px solid #e2e8f0;
-  text-align: right;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start; /* Кнопки выравниваем по левому краю и не растягиваем */
 }
-
 .totalText {
-  font-size: 20px;
-  font-weight: 600;
-  color: #2d3748;
-  margin-top: 20px;
+  font-size: 18px;
+  margin-bottom: 10px;
 }
-
 
 .orderButton {
   display: inline-flex;
@@ -108,12 +104,17 @@
   border: none;
   transition: background-color 0.2s ease;
   text-decoration: none;
+  margin-bottom: 12px;
 }
 
 .orderButton:hover {
   background-color: #6b43b8;
 }
-
+.orderButton,
+.backButton {
+  width: auto; /* Чтобы кнопки по ширине были по содержимому */
+  max-width: 100%; /* На всякий случай ограничиваем максимальную ширину */
+}
 .arrowLeft {
   margin-right: 8px;
   font-weight: bold;
@@ -219,22 +220,24 @@
   font-weight: bold;
 }
 
-.backToHomeButton {
-  display: inline-block;
-  padding: 8px 14px;
-  background-color: var(--primary);
-  color: var(--light);
-  font-weight: 600;
+.backButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--primary, #8758D4);
+  color: white;
+  padding: 10px 20px;
   border-radius: 6px;
-  text-decoration: none;
+  font-weight: 500;
+  font-size: 16px;
   cursor: pointer;
-  transition: background-color 0.3s, color 0.3s;
-  user-select: none;
+  border: none;
+  transition: background-color 0.2s ease;
+  text-decoration: none;
+  margin-top: 10px; /* <-- Вот это отвечает за перенос ниже */
 }
 
-.backToHomeButton:hover,
-.backToHomeButton:focus {
-  background-color: var(--primary-light); /* светлый оттенок, не полностью фиолетовый */
-  color: var(--light); /* цвет текста оставляем светлым */
-  outline: none;
+.backButton:hover {
+  background-color: #6b43b8;
+  color: white; /* оставляем белым при наведении */
 }

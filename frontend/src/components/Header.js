@@ -2,12 +2,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styles from './Header.module.css';
 
-const Header = ({ isLoggedIn, onLogout, cartTotalPrice }) => {
+const Header = ({ isLoggedIn, onLogout, cartTotalPrice, favoritesCount, cartItemsCount }) => {
   return (
     <nav className={styles.navBar}>
       <div className={styles.navLeft}>
         <Link to="/favorites" className={styles.navButton}>
           <span className={styles.navIcon}>❤️</span> Избранное
+          {favoritesCount > 0 && <span className={styles.badge}>{favoritesCount}</span>}
         </Link>
         {isLoggedIn && (
           <Link to="/orders" className={styles.navButton}>
@@ -19,11 +20,11 @@ const Header = ({ isLoggedIn, onLogout, cartTotalPrice }) => {
       <div className={styles.navRight}>
         <Link to="/cart" className={styles.cartButton}>
           <span className={styles.navIcon}>🛒</span>
-          {/* <span className={styles.cartSum}>{cartTotalPrice} ₸</span> */}
+          {cartItemsCount > 0 && <span className={styles.cartSum}>{cartItemsCount} ({cartTotalPrice} ₽)</span>}
         </Link>
 
         {!isLoggedIn ? (
-          <Link to="/login" className={styles.loginButton}>
+          <Link to="/auth" className={styles.loginButton}>
             Вход
           </Link>
         ) : (

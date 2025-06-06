@@ -1,13 +1,12 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-import Header from './components/Header'; 
+import Header from './components/Header';
 import Home from './pages/Home';
 import Favorites from './pages/Favorites';
 import Cart from './components/Cart';
 import Orders from './pages/Orders';
-import Login from './pages/Login';
-import Register from './pages/Register';
+import AuthForm from './pages/AuthForm';
 import ResetPassword from './pages/ResetPassword';
 import Products from './components/Products';
 
@@ -68,12 +67,19 @@ function App() {
         cartItemsCount={cartItemsCount}
       />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={
+          <Home
+            isLoggedIn={isLoggedIn}
+            cartItems={cartItems}
+            setCartItems={setCartItems}
+            favorites={favorites}
+            setFavorites={setFavorites}
+          />
+        } />
         <Route path="/favorites" element={<Favorites />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/orders" element={<Orders />} />
-        <Route path="/login" element={<Login onLogin={handleLogin} />} />
-        <Route path="/register" element={<Register />} />
+        <Route path="/auth" element={<AuthForm onLogin={handleLogin} />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/products" element={<Products />} />
       </Routes>
