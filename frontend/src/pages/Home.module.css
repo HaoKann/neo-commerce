@@ -51,15 +51,25 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.image {
+/* Контейнер для изображения */
+.imageContainer {
   width: 100%;
-  height: 160px; /* фиксированная высота */
-  object-fit: contain; /* сохраняет пропорции */
-  margin-bottom: 12px;
-  background-color: #f9f9f9; /* нейтральный фон под прозрачные картинки */
+  height: 180px; /* фиксированная высота контейнера */
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: #f9f9f9; /* нейтральный фон */
+  border-radius: 8px;
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+
+/* Само изображение */
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* сохраняет пропорции, помещает полностью в контейнер */
+  /* или используйте object-fit: cover; для заполнения всего контейнера с обрезкой */
 }
 
 .name {
@@ -75,28 +85,88 @@
 
 .buttons {
   display: flex;
-  justify-content: center;
-  gap: 12px;
-  margin-top: 12px;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: auto; /* Прижимает кнопки к низу карточки */
 }
 
-.cartButton,
-.likeButton {
-  font-size: 18px;
-  background-color: #667EEA;
+/* Стили для кнопок внутри карточки */
+.card .cartButton,
+.card .likeButton {
+  flex: 1; /* Кнопки займут равную ширину */
+  background-color: #8758D4;
   color: white;
   border: none;
-  padding: 10px 14px;
-  border-radius: 8px;
+  padding: 10px 8px;
+  border-radius: 6px;
   cursor: pointer;
-  transition: background-color 0.2s, transform 0.2s;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 
-.cartButton:hover,
+.card .cartButton:hover,
+.card .likeButton:hover {
+  background-color: #7048c4;
+  transform: translateY(-1px);
+}
+
+/* Стили для активного состояния likeButton */
+.card .likeButton.active {
+  background-color: #ff4444; /* Красный фон для избранного */
+  color: white; /* Белый текст для контраста */
+}
+
+.card .likeButton.active:hover {
+  background-color: #e03e3e; /* Темно-красный при наведении */
+  transform: translateY(-1px);
+}
+
+/* Убираем конфликтные переопределения */
+.cartButton,
+.likeButton {
+  background: initial;
+  border: initial;
+  font-size: initial;
+  cursor: initial;
+  padding: initial;
+  border-radius: initial;
+  transition: initial;
+}
+
+.cartButton:hover {
+  background-color: initial;
+}
+
+.likeButton.active {
+  background-color: initial;
+}
+
 .likeButton:hover {
-  background-color: #5A67D8;
+  transform: initial;
 }
 
+.likeButton.active:hover {
+  background-color: initial;
+}
+
+/* Стили для иконок или текста внутри кнопок */
+.card .cartButton span[role="img"],
+.card .likeButton span[role="img"] {
+  margin-right: 4px; /* Отступ между иконкой и текстом */
+  font-size: 16px; /* Размер иконки */
+}
+
+.card .cartButton span,
+.card .likeButton span {
+  font-size: 14px;
+}
+
+/* Дополнительные элементы */
 .cartBadge,
 .badge {
   position: absolute;
@@ -185,7 +255,7 @@
   border-bottom: 1px solid #e0e0e0;
 }
 
-.navLeft, 
+.navLeft,
 .navRight {
   display: flex;
   gap: 15px;
@@ -222,39 +292,6 @@
   font-weight: bold;
   color: #1890ff;
   margin: 10px 0;
-}
-
-.buttons {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 15px;
-}
-
-.cartButton, 
-.likeButton {
-  background: none;
-  border: none;
-  font-size: 18px;
-  cursor: pointer;
-  padding: 5px 10px;
-  border-radius: 4px;
-  transition: all 0.2s;
-}
-
-.cartButton:hover {
-  background-color: #f0f0f0;
-}
-
-.likeButton {
-  color: #ccc;
-}
-
-.likeButton.active {
-  color: #ff4d4f;
-}
-
-.likeButton:hover {
-  transform: scale(1.1);
 }
 
 /* Модальное окно */
@@ -312,8 +349,8 @@
   border-radius: 4px;
   cursor: pointer;
 }
+
 .cartSum {
   opacity: 1; /* или просто не указывай opacity */
   /* можно убрать transition, если не нужен */
 }
-

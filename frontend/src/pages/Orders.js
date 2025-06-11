@@ -1,11 +1,11 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useAppContext } from '../App';
 import { useNavigate } from 'react-router-dom';
 import styles from './Orders.module.css';
 import nonOrdersIcon from '../assets/media/alerts/non-orders.png';
 
 function Orders() {
-  const orders = useSelector(state => state.orders);
+  const { orders, handleOrder } = useAppContext(); // Добавляем handleOrder для возможного использования
   const navigate = useNavigate();
 
   const handleGoHome = () => {
@@ -24,9 +24,11 @@ function Orders() {
         <p className={styles.noOrdersBold}>У вас нет заказов</p>
         <p className={styles.noOrdersSubText}>Добавьте товары в корзину.</p>
         <p className={styles.noOrdersSubText}>Оформите хотя бы один заказ.</p>
-        <button className={styles.homeButton} onClick={handleGoHome}>
-          ← Вернуться на главную
-        </button>
+        <div className={styles.backContainer}>
+          <button className={styles.backButton} onClick={handleGoHome}>
+            ← Вернуться на главную
+          </button>
+        </div>
       </div>
     );
   }
@@ -59,9 +61,11 @@ function Orders() {
         </div>
       ))}
 
-      <button className={styles.homeButton} onClick={handleGoHome}>
-        Вернуться на главную
-      </button>
+      <div className={styles.backContainer}>
+        <button className={styles.backButton} onClick={handleGoHome}>
+          Вернуться на главную
+        </button>
+      </div>
     </div>
   );
 }

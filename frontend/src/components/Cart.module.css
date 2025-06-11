@@ -83,8 +83,9 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  align-items: flex-start; /* Кнопки выравниваем по левому краю и не растягиваем */
+  align-items: flex-start;
 }
+
 .totalText {
   font-size: 18px;
   margin-bottom: 10px;
@@ -104,62 +105,38 @@
   border: none;
   transition: background-color 0.2s ease;
   text-decoration: none;
-  margin-bottom: 12px;
 }
 
 .orderButton:hover {
   background-color: #6b43b8;
 }
-.orderButton,
-.backButton {
-  width: auto; /* Чтобы кнопки по ширине были по содержимому */
-  max-width: 100%; /* На всякий случай ограничиваем максимальную ширину */
-}
-.arrowLeft {
-  margin-right: 8px;
-  font-weight: bold;
-  font-size: 18px;
-}
 
-/* Дополнительные классы, если используешь CSS-переменные */
-.cart {
-  background: var(--light, #f9f9f9);
-}
-
-.summary {
-  border-top: 2px solid var(--primary, #1890ff);
-}
-
-.checkoutButton {
-  background-color: var(--primary, #1890ff);
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.checkoutButton:hover {
-  background-color: var(--primary-dark, #0c70d4);
-}
-
-.emptyCartContainer {
+.backContainer {
   text-align: center;
-  margin-top: 40px;
+  margin-top: 20px;
 }
 
-.emptyCartIcon {
-  width: 80px;
-  height: auto;
-  margin-bottom: 15px;
+.backToHomeButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--primary, #8758D4);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.2s ease;
+  text-decoration: none;
 }
 
-.emptyCart {
-  font-size: 18px;
-  color: #777;
+.backToHomeButton:hover {
+  background-color: var(--primary-light); 
+  color: var(--light);
+  outline: none;
 }
-
 
 .successBlock {
   text-align: center;
@@ -183,61 +160,9 @@
   margin-bottom: 10px;
 }
 
-.successMessage {
-  color: green;
-  font-weight: bold;
-  font-size: 18px;
-}
-
-
 .successSubtext {
   color: #888888;
   font-size: 14px;
   margin-top: 6px;
   text-align: center;
-}
-
-.primaryButton {
-  display: inline-block;
-  background-color: var(--primary, #8758D4);
-  color: white;
-  padding: 10px 20px;
-  border-radius: 6px;
-  text-decoration: none;
-  font-weight: 500;
-  font-size: 16px;
-  cursor: pointer;
-  border: none;
-  transition: background-color 0.2s ease, color 0.2s ease;
-}
-
-.primaryButton:hover {
-  background-color: #6b43b8;
-}
-
-.primaryButton .arrow {
-  margin-right: 8px;
-  font-weight: bold;
-}
-
-.backButton {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--primary, #8758D4);
-  color: white;
-  padding: 10px 20px;
-  border-radius: 6px;
-  font-weight: 500;
-  font-size: 16px;
-  cursor: pointer;
-  border: none;
-  transition: background-color 0.2s ease;
-  text-decoration: none;
-  margin-top: 10px; /* <-- Вот это отвечает за перенос ниже */
-}
-
-.backButton:hover {
-  background-color: #6b43b8;
-  color: white; /* оставляем белым при наведении */
 }

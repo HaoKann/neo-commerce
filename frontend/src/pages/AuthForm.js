@@ -1,204 +1,110 @@
 import React, { useState } from 'react';
+import { useAppContext } from '../App';
 import { useNavigate } from 'react-router-dom';
 import styles from './Register.module.css';
 
-export default function AuthForm({ onLogin }) {
+function AuthForm() {
+  const { handleLogin } = useAppContext();
   const navigate = useNavigate();
-
-  // Состояние для формы входа
   const [loginData, setLoginData] = useState({ email: '', password: '' });
-  const [loginError, setLoginError] = useState('');
-  const [loginLoading, setLoginLoading] = useState(false);
-
-  // Состояние для формы регистрации
   const [registerData, setRegisterData] = useState({ email: '', password: '', confirmPassword: '' });
-  const [registerError, setRegisterError] = useState('');
-  const [registerLoading, setRegisterLoading] = useState(false);
+  const [error, setError] = useState('');
 
-  // Обработчик изменений для формы входа
-  const handleLoginChange = (e) => {
-    const { name, value } = e.target;
-    setLoginData(prev => ({ ...prev, [name]: value }));
-  };
-
-  // Обработчик изменений для формы регистрации
-  const handleRegisterChange = (e) => {
-    const { name, value } = e.target;
-    setRegisterData(prev => ({ ...prev, [name]: value }));
-  };
-
-  // Обработчик отправки формы входа
-  const handleLoginSubmit = async (e) => {
+  const handleLoginSubmit = (e) => {
     e.preventDefault();
-    setLoginLoading(true);
-    setLoginError('');
-
-    const url = 'http://localhost:4000/api/users/sign-in';
-    const body = {
-      email: loginData.email,
-      password: loginData.password,
-    };
-
-    try {
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Ошибка входа');
-      }
-
-      const result = await response.json();
-      localStorage.setItem('token', result.token);
-      onLogin();
-      navigate('/');
-    } catch (err) {
-      setLoginError(err.message);
-    } finally {
-      setLoginLoading(false);
+    // Здесь обычно запрос к API
+    if (loginData.email && loginData.password) {
+      handleLogin(); // Обновляем isLoggedIn в контексте
+      setError('');
+      navigate('/'); // Перенаправляем на главную страницу
+    } else {
+      setError('Заполните все поля');
     }
   };
 
-  // Обработчик отправки формы регистрации
-  const handleRegisterSubmit = async (e) => {
+  const handleRegisterSubmit = (e) => {
     e.preventDefault();
-    setRegisterLoading(true);
-    setRegisterError('');
-
-    if (registerData.password !== registerData.confirmPassword) {
-      setRegisterError('Пароли не совпадают');
-      setRegisterLoading(false);
-      return;
-    }
-
-    const url = 'http://localhost:4000/api/users/register';
-    const body = {
-      email: registerData.email,
-      password: registerData.password,
-    };
-
-    try {
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Ошибка регистрации');
+    // Здесь обычно запрос к API
+    if (registerData.email && registerData.password && registerData.confirmPassword) {
+      if (registerData.password !== registerData.confirmPassword) {
+        setError('Пароли не совпадают');
+        return;
       }
-
-      setRegisterData({ email: '', password: '', confirmPassword: '' });
-      setRegisterError('');
-      alert('Регистрация успешна! Теперь вы можете войти.');
-    } catch (err) {
-      setRegisterError(err.message);
-    } finally {
-      setRegisterLoading(false);
+      setError('');
+      // Логика регистрации (например, запрос к серверу)
+      // Временное сообщение об успехе
+      alert('Регистрация успешна! Пожалуйста, войдите.');
+      setRegisterData({ email: '', password: '', confirmPassword: '' }); // Очистка формы
+      // Можно добавить navigate('/auth') для возврата к форме входа
+    } else {
+      setError('Заполните все поля');
     }
   };
 
   return (
     <div className={styles.authContainer}>
       <div className={styles.formsWrapper}>
-        {/* Форма входа */}
         <div className={styles.formContainer}>
           <h2 className={styles.registerTitle}>Вход</h2>
-          {loginError && (
-            <div className={styles.errorAlert}>
-              <span className={styles.errorText}>{loginError}</span>
-            </div>
-          )}
-          <form onSubmit={handleLoginSubmit} className={styles.registerForm}>
+          {error && <div className={styles.errorAlert}>{error}</div>}
+          <form onSubmit={handleLoginSubmit}>
             <div className={styles.inputGroup}>
               <label className={styles.inputLabel}>Email</label>
               <input
                 type="email"
-                name="email"
-                value={loginData.email}
-                onChange={handleLoginChange}
                 className={styles.inputField}
-                required
+                value={loginData.email}
+                onChange={(e) => setLoginData({ ...loginData, email: e.target.value })}
               />
             </div>
             <div className={styles.inputGroup}>
               <label className={styles.inputLabel}>Пароль</label>
               <input
                 type="password"
-                name="password"
-                value={loginData.password}
-                onChange={handleLoginChange}
                 className={styles.inputField}
-                required
+                value={loginData.password}
+                onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
               />
             </div>
-            <button
-              type="submit"
-              className={styles.submitButton}
-              disabled={loginLoading}
-            >
-              {loginLoading ? 'Загрузка...' : 'Войти'}
-            </button>
-            
+            <button type="submit" className={styles.submitButton}>Войти</button>
           </form>
         </div>
-
-        {/* Форма регистрации */}
         <div className={styles.formContainer}>
           <h2 className={styles.registerTitle}>Регистрация</h2>
-          {registerError && (
-            <div className={styles.errorAlert}>
-              <span className={styles.errorText}>{registerError}</span>
-            </div>
-          )}
-          <form onSubmit={handleRegisterSubmit} className={styles.registerForm}>
+          <form onSubmit={handleRegisterSubmit}>
             <div className={styles.inputGroup}>
               <label className={styles.inputLabel}>Email</label>
               <input
                 type="email"
-                name="email"
-                value={registerData.email}
-                onChange={handleRegisterChange}
                 className={styles.inputField}
-                required
+                value={registerData.email}
+                onChange={(e) => setRegisterData({ ...registerData, email: e.target.value })}
               />
             </div>
             <div className={styles.inputGroup}>
               <label className={styles.inputLabel}>Пароль</label>
               <input
                 type="password"
-                name="password"
-                value={registerData.password}
-                onChange={handleRegisterChange}
                 className={styles.inputField}
-                required
+                value={registerData.password}
+                onChange={(e) => setRegisterData({ ...registerData, password: e.target.value })}
               />
             </div>
             <div className={styles.inputGroup}>
               <label className={styles.inputLabel}>Подтвердите пароль</label>
               <input
                 type="password"
-                name="confirmPassword"
-                value={registerData.confirmPassword}
-                onChange={handleRegisterChange}
                 className={styles.inputField}
-                required
+                value={registerData.confirmPassword}
+                onChange={(e) => setRegisterData({ ...registerData, confirmPassword: e.target.value })}
               />
             </div>
-            <button
-              type="submit"
-              className={styles.submitButton}
-              disabled={registerLoading}
-            >
-              {registerLoading ? 'Загрузка...' : 'Зарегистрироваться'}
-            </button>
+            <button type="submit" className={styles.submitButton}>Зарегистрироваться</button>
           </form>
         </div>
       </div>
     </div>
   );
 }
+
+export default AuthForm;

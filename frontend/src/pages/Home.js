@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { useAppContext } from '../App';
 import ProductCard from '../components/ProductCard';
 import styles from './Home.module.css';
 
@@ -17,7 +18,8 @@ const productsData = [
   { id: 12, title: "Kingston 64GB", price: "1800", image: "/images/products/electronics/kingston.jpg" },
 ];
 
-export default function Home({ isLoggedIn, cartItems, setCartItems, favorites, setFavorites }) {
+export default function Home() {
+  const { isLoggedIn, cartItems, setCartItems, favorites, setFavorites } = useAppContext();
   const [query, setQuery] = useState('');
 
   // Фильтр товаров по поиску
@@ -30,6 +32,7 @@ export default function Home({ isLoggedIn, cartItems, setCartItems, favorites, s
 
   // Добавить в корзину
   const handleAddToCart = (product) => {
+    console.log('Добавляем в корзину:', product); // Для отладки
     if (!isLoggedIn) {
       window.location.href = '/auth';
       return;
@@ -47,6 +50,7 @@ export default function Home({ isLoggedIn, cartItems, setCartItems, favorites, s
         return [...prevItems, { ...product, quantity: 1 }];
       }
     });
+    console.log('Текущее состояние корзины:', cartItems); // Для отладки
   };
 
   // Добавить/удалить из избранного

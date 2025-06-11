@@ -1,67 +1,53 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { addToCart } from '../store/cartSlice';
-import { addToFavorites, removeFromFavorites } from '../store/favoritesSlice';
-import styles from './ProductCard.module.css';
+import styles from '../pages/Home.module.css'; // Импортируем стили
 
-const ProductCard = ({ product }) => {
-  const dispatch = useDispatch();
-  const favorites = useSelector(state => state.favorites.items);
-  const [imageError, setImageError] = React.useState(false);
-  const isFavorite = favorites.some(item => item.id === product.id);
-
-  const handleAddToCart = () => {
-    dispatch(addToCart({
-      id: product.id,
-      title: product.title,
-      price: product.price,
-      image: product.image,
-    }));
+function ProductCard({ product, onAddToCart, onAddToFavorites, isFavorite }) {
+  const handleAddToCartClick = () => {
+    onAddToCart(product);
   };
 
-  const handleToggleFavorite = () => {
-    if (isFavorite) {
-      dispatch(removeFromFavorites(product.id));
-    } else {
-      dispatch(addToFavorites({
-        id: product.id,
-        title: product.title,
-        price: product.price,
-        image: product.image,
-      }));
-    }
+  const handleAddToFavoritesClick = () => {
+    // Передаем ID товара (как ожидает родительский компонент)
+    onAddToFavorites(product.id);
   };
 
   return (
     <div className={styles.card}>
-      <img
-        src={imageError ? 'https://via.placeholder.com/200' : product.image}
-        alt={product.title}
-        className={styles.image}
-        onError={() => setImageError(true)}
-      />
-      <h3 className={styles.name}>{product.title}</h3> {/* ✅ ПРАВИЛЬНО */}
+      {/* Контейнер для изображения с фиксированными размерами */}
+      <div className={styles.imageContainer}>
+        <img 
+          src={product.image} 
+          alt={product.title} 
+          className={styles.image}
+        />
+      </div>
+      
+      {/* Название товара */}
+      <h3 className={styles.name}>{product.title}</h3>
+      
+      {/* Цена товара */}
       <p className={styles.price}>
-        {new Intl.NumberFormat('ru-RU').format(product.price)} ₸
+        {product.price} ₸
       </p>
+      
+      {/* Кнопки действий */}
       <div className={styles.buttons}>
         <button
+          onClick={handleAddToCartClick}
           className={styles.cartButton}
-          onClick={handleAddToCart}
-          aria-label="Добавить в корзину"
         >
-          ➕
+          <span role="img" aria-label="cart">🛒</span> В корзину
         </button>
+        
         <button
+          onClick={handleAddToFavoritesClick}
           className={`${styles.likeButton} ${isFavorite ? styles.active : ''}`}
-          onClick={handleToggleFavorite}
-          aria-label={isFavorite ? "Удалить из избранного" : "Добавить в избранное"}
         >
-          {isFavorite ? '❤️' : '🤍'}
+          {isFavorite ? 'Убрать' : 'В избранное'}
         </button>
       </div>
     </div>
   );
-};
+}
 
-export default React.memo(ProductCard);
+export default ProductCard;
